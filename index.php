@@ -75,7 +75,7 @@
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">Housekeeping</h3>
+                  <h3 class="mb-0">Cleaning Requests</h3>
                 </div>
                 <div class="col text-right">
                   <a href="request.php" class="btn btn-sm btn-primary">Send Request</a>
@@ -87,7 +87,7 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col">Housekeeper</th>
+                    <th scope="col">Request ID</th>
                     <th scope="col">Date</th>
                     <th scope="col">Time Requested</th>
                     <th scope="col">Time In</th>

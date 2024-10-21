@@ -31,7 +31,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
           <div class=" dropdown-header noti-title">
-            <h6 class="text-overflow m-0">Housekeeper service</h6>
+            <h6 class="text-overflow m-0">Kneegears Cleaning Service</h6>
           </div>
           <a href="allot.php?logout='1'" class="dropdown-item">
             <i class="ni ni-user-run"></i>
@@ -47,7 +47,7 @@
         <div class="row">
           <div class="col-6 collapse-brand">
             <a href="index.php">
-              <h3>Housekeeper</h3>
+              <h3>Kneegears</h3>
             </a>
           </div>
           <div class="col-6 collapse-close">
@@ -80,6 +80,23 @@
             <i class="ni ni-bulb-61"></i>Suggestions
           </a>
         </li>
+        <!-- New buttons -->
+        <li class="nav-item">
+          <a class="nav-link" href="manage_customer.php">
+            <i class="ni ni-world"></i>Manage Customer
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="manage_cleaner.php">
+            <i class="ni ni-user-run"></i>Manage Cleaner
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="manage_payments.php">
+            <i class="ni ni-credit-card"></i>Manage Payments
+          </a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="registeruser.php">
             <i class="ni ni-single-02"></i>Register User
@@ -92,7 +109,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="allot.php?logout='1'">
-            <i class="ni ni-user-run"></i> Logout
+            <i class="ni ni-button-power"></i> Logout
           </a>
         </li>
       </ul>
