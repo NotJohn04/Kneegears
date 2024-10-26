@@ -27,32 +27,36 @@
     $feed_query = "INSERT INTO feedback (user_id, request_id, rating, timein, timeout) 
                    VALUES ('$user_id', '$feedReqid', '$feedRating', '$feedTimein', '$feedTimeout')";
     if (mysqli_query($db, $feed_query)) {
-      $_SESSION['feed_sent'] = "Feedback submitted successfully for request ID - " . $feedReqid;
+      $feedback_id = mysqli_insert_id($db); // Get the last inserted feedback ID
+      if ($feedback_id > 0) {  // Ensure feedback was inserted successfully
+        $_SESSION['feed_sent'] = "Feedback submitted successfully for request ID - " . $feedReqid;
 
-      // Update service request status to 'Completed'
-      mysqli_query($db, "UPDATE service_requests SET status = 'Completed' WHERE request_id = '$feedReqid'");
+        // Update service request status to 'Completed'
+        mysqli_query($db, "UPDATE service_requests SET status = 'Completed' WHERE request_id = '$feedReqid'");
 
-      // Handle suggestions
-      if (!empty($feedSuggestion)) {
-        $feedback_id = mysqli_insert_id($db);
-        $suggest_query = "INSERT INTO suggestions (feedback_id, user_id, suggestion) 
-                          VALUES ('$feedback_id', '$user_id', '$feedSuggestion')";
-        mysqli_query($db, $suggest_query);
-      }
-
-      // Handle complaints
-      if (!empty($feedComplaints)) {
-        $feedback_id = mysqli_insert_id($db); // Ensure this is correct
-        $complaint_query = "INSERT INTO complaints (feedback_id, user_id, complaint) 
-                            VALUES ('$feedback_id', '$user_id', '$feedComplaints')";
-        mysqli_query($db, $complaint_query);
-
-        // Update cleaner's complaints count
-        $cleaner_id_result = mysqli_query($db, "SELECT cleaner_id FROM service_requests WHERE request_id = '$feedReqid'");
-        if ($cleaner_row = mysqli_fetch_assoc($cleaner_id_result)) {
-          $cleaner_id = $cleaner_row['cleaner_id'];
-          mysqli_query($db, "UPDATE cleaners SET complaints = complaints + 1 WHERE cleaner_id = '$cleaner_id'");
+        // Handle suggestions
+        if (!empty($feedSuggestion)) {
+          $suggest_query = "INSERT INTO suggestions (feedback_id, user_id, suggestion) 
+                            VALUES ('$feedback_id', '$user_id', '$feedSuggestion')";
+          mysqli_query($db, $suggest_query);
         }
+
+        // Handle complaints
+        if (!empty($feedComplaints)) {
+          $complaint_query = "INSERT INTO complaints (feedback_id, user_id, complaint) 
+                              VALUES ('$feedback_id', '$user_id', '$feedComplaints')";
+          mysqli_query($db, $complaint_query);
+
+          // Update cleaner's complaints count
+          $cleaner_id_result = mysqli_query($db, "SELECT cleaner_id FROM service_requests WHERE request_id = '$feedReqid'");
+          if ($cleaner_row = mysqli_fetch_assoc($cleaner_id_result)) {
+            $cleaner_id = $cleaner_row['cleaner_id'];
+            mysqli_query($db, "UPDATE cleaners SET complaints = complaints + 1 WHERE cleaner_id = '$cleaner_id'");
+          }
+        }
+
+      } else {
+        $_SESSION['feed_error'] = "Failed to retrieve feedback ID.";
       }
 
     } else {
