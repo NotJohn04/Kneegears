@@ -25,8 +25,8 @@ try {
       'reqDate' => $_SESSION['reqDate'],
       'reqTime' => $_SESSION['reqTime'],
     ],
-    'success_url' => 'http://localhost/Cleanning_Management_System/payment_success.php?session_id={CHECKOUT_SESSION_ID}',
-    'cancel_url' => 'http://localhost/Cleanning_Management_System/payment.php',
+    'success_url' => 'http://localhost/Kneegears/payment_success.php?session_id={CHECKOUT_SESSION_ID}',
+    'cancel_url' => 'http://localhost/Kneegears/payment.php',
   ]);
 
   echo json_encode(['id' => $checkout_session->id]);

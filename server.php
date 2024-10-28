@@ -89,4 +89,34 @@ if(isset($_POST['adminLogin'])){
   }
 }
 
+// ========================= CLEANER LOGIN =======================
+if(isset($_POST['cleanerLogin'])){
+  $cleanerEmail = mysqli_real_escape_string($db, $_POST['cleanerEmail']);
+  $cleanerPassword = mysqli_real_escape_string($db, $_POST['cleanerPassword']);
+
+  // Check if cleaner exists
+  $query_find_cleaner = "SELECT * FROM cleaners WHERE email='$cleanerEmail'";
+  $result_find_cleaner = mysqli_query($db, $query_find_cleaner);
+
+  if (mysqli_num_rows($result_find_cleaner) == 1) {
+    // Fetch the cleaner's data
+    $cleaner = mysqli_fetch_assoc($result_find_cleaner);
+    
+    // Password check (hardcoded as '1234')
+    if($cleanerPassword === '1234'){
+      // Set session variables
+      $_SESSION['cleaner_id'] = $cleaner['cleaner_id'];
+      $_SESSION['cleaner_email'] = $cleanerEmail;
+      $_SESSION['cleaner_name'] = $cleaner['name'];
+      $_SESSION['cleaner_logged'] = "You are now logged in";
+      header("Location: cdashboard.php");
+      exit();
+    } else {
+      array_push($errors, "Wrong password! Please try again.");
+    }
+  } else {
+    array_push($errors, "Cleaner not found!");
+  }
+}
+
 ?>
